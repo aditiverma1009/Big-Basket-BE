@@ -1,9 +1,25 @@
 const Models = require('../../models');
 
-const fetchFromDb = () => Models.orders.findAll({
-  limit: 10,
-  order: [['createdAt', 'DESC']],
-});
+const fetchFromDb = () => {
+  const allArray = [];
+  return Models.orders.findAll({
+    limit: 10,
+    order: [['createdAt', 'DESC']],
+  }).then((records) => {
+    records.forEach((record) => {
+      const thisObj = Models.orders.findOne({
+        where: {
+          id: record.id,
+        },
+        include: [{
+          model: Models.orderitems,
+        }],
+      });
+      allArray.push(thisObj);
+    });
+    return allArray;
+  }).then(solution => Promise.all(solution));
+};
 
 // const groupBy = (DataFed) => {
 //   const itemByCategory = {};
@@ -20,7 +36,7 @@ const fetchFromDb = () => Models.orders.findAll({
 //   return itemByCategory;
 // };
 
-const orders = () => fetchFromDb().then(ordersData => console.log(ordersData));
+const orders = () => fetchFromDb().then(ordersData => ordersData);
 
 module.exports = {
   orders,
