@@ -25,7 +25,7 @@ module.exports = {
       type: Sequelize.INTEGER,
     },
     cost: {
-      type: Sequelize.DECIMAL,
+      type: Sequelize.FLOAT,
     },
     description: {
       type: Sequelize.STRING,

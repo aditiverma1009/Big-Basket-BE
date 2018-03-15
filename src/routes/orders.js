@@ -2,7 +2,7 @@ const liborders = require('../lib/liborders');
 
 module.exports = [{
   path: '/orders',
-  method: 'GET',
+  method: 'POST',
   handler(request, response) {
     return liborders.orders().then((lastTenOrders) => {
       response({
