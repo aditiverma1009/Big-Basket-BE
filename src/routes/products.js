@@ -13,7 +13,7 @@ module.exports = [{
       .catch(() => {
         response({
           code: 500,
-          data: [],
+          data: {},
         });
       });
   },

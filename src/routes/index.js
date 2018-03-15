@@ -1,4 +1,5 @@
 const products = require('./products');
+const orders = require('./orders');
 
 module.exports = [{
   path: '/',
@@ -6,5 +7,5 @@ module.exports = [{
   handler(request, response) {
     response('On root.');
   },
-}].concat(products);
+}].concat(products, orders);
 
