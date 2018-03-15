@@ -5,14 +5,21 @@ const { Op } = Sequelize;
 
 const checkout = (order) => {
   const allCategories = Object.keys(order);
-
   const allIds = [];
+  const allItems = [];
+  const newArrayOP = [];
   for (let i = 0; i < allCategories.length; i += 1) {
     const itemsInThisCategory = order[allCategories[i]];
     for (let j = 0; j < itemsInThisCategory.length; j += 1) {
       allIds.push(itemsInThisCategory[j].itemid);
+      allItems.push({
+        itemid: itemsInThisCategory[j].itemid,
+        availableQuantity: itemsInThisCategory[j].availableQuantity,
+        cost: itemsInThisCategory[j].cost,
+      });
     }
   }
+
 
   return Models.inventories.findAll({
     where: {
@@ -20,17 +27,23 @@ const checkout = (order) => {
         [Op.or]: allIds,
       },
     },
-  }).then(records => records.map(eachRecord =>
-    allCategories.map(eachCategory =>
-      order[eachCategory].map((eachItem) => {
-        if (eachItem.availableQuantity > eachRecord.availableQuantity) {
-          return ({
-            itemid: eachRecord.itemid,
+  }).then((records) => {
+    records.map(eachRecord =>
+      allItems.map((eachItem) => {
+        if (eachItem.availableQuantity > eachRecord.availableQuantity &&
+          eachItem.itemid === eachRecord.itemid) {
+          newArrayOP.push({
+            itemid: eachItem.itemid,
             availableQuantity: eachRecord.availableQuantity,
           });
         }
-        return ({});
-      })))).then(allData => Promise.all(allData));
+        return null;
+      }));
+    return newArrayOP;
+  }).then(allData => Promise.all(allData)).then((values) => {
+    console.log(values[0]);
+    return values;
+  });
 };
 module.exports = {
   checkout,
