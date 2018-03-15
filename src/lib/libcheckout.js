@@ -40,40 +40,36 @@ const checkout = (order) => {
         return null;
       }));
     return newArrayOP;
-  }).then(allData => Promise.all(allData)).then((values) => {
-    console.log(values[0]);
-    return values;
+  }).then(allData => Promise.all(allData)).then(values => values);
+};
+
+
+const feedInOrders = (orderData) => {
+  const allCategories = Object.keys(orderData);
+
+  const allItems = [];
+
+  for (let i = 0; i < allCategories.length; i += 1) {
+    const itemsInThisCategory = orderData[allCategories[i]];
+    for (let j = 0; j < itemsInThisCategory.length; j += 1) {
+      allItems.push({
+        ordereditemid: itemsInThisCategory[j].itemid,
+        orderedquantity: itemsInThisCategory[j].availableQuantity,
+        orderedcost: itemsInThisCategory[j].cost,
+      });
+    }
+  }
+
+
+  return Models.orders.create({
+    orderitems: allItems,
+  }, {
+    include: Models.orderitems,
   });
 };
+
 module.exports = {
   checkout,
+  feedInOrders,
 };
-
-//   itemsInThisCategory.map((step) => {
-//     .then((records) => {
-
-//     });
-//   });
-// };
-
-
-// Models.inventories.findOne({
-//   where: { itemid: step.itemid },
-// }).then((record) => {
-//         if (record.availableQuantity < step.availableQuantity) {
-//           const objectNew = {
-//             itemid: record.itemid,
-//             title: record.title,
-//             category: record.category,
-//             availableQuantity: record.availableQuantity,
-//             brand: record.brand,
-//           };
-//           responseArray.push(objectNew);
-//         }
-//       }));
-//       return Promise.all(itemsInThisCategory);
-//     }));
-// }).then(() => Promise.all(responseArray));
-// return promise1;
-// };
 

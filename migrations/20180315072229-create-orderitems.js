@@ -8,7 +8,7 @@ module.exports = {
       primaryKey: true,
       type: Sequelize.INTEGER,
     },
-    ordersId: {
+    orderId: {
       type: Sequelize.INTEGER,
     },
     ordereditemid: {
@@ -18,7 +18,7 @@ module.exports = {
       type: Sequelize.INTEGER,
     },
     orderedcost: {
-      type: Sequelize.DECIMAL,
+      type: Sequelize.FLOAT,
     },
     createdAt: {
       allowNull: false,
