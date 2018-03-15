@@ -1,0 +1,23 @@
+{
+  "development": {
+    "username": "bigbasket",
+    "password": "root",
+    "database": "bigbasketdev",
+    "host": "127.0.0.1",
+    "dialect": "postgres"
+  },
+  "test": {
+    "username": "bigbasket",
+    "password": "root",
+    "database": "bigbasketdev",
+    "host": "127.0.0.1",
+    "dialect": "postgres"
+  },
+  "production": {
+    "username": "bigbasket",
+    "password": "root",
+    "database": "bigbasketproduction",
+    "host": "127.0.0.1",
+    "dialect": "postgres"
+  }
+}
