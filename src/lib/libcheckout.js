@@ -44,9 +44,31 @@ const checkout = (order) => {
 };
 
 
-const feedInOrders = (orderData) => {
-  const allCategories = Object.keys(orderData);
+const feedInInv = dataFedToOrders => dataFedToOrders.forEach(step => Models.inventories.findOne({
+  where: {
+    itemid: step.ordereditemid,
+  },
+}).then((record) => {
+  console.log('<<<<<<<<');
+  console.log(record.dataValues);
+  console.log('>>>>>>');
+  console.log(step);
+  const diff = (record.dataValues.availableQuantity) - (step.orderedquantity);
+  return Models.inventories.update(
+    { availableQuantity: diff },
+    {
+      where: {
+        itemid: step.ordereditemid,
+      },
+    },
+  // values: {
+  // },
+  );
+}));
 
+
+const feedInOrdersAndInv = (orderData) => {
+  const allCategories = Object.keys(orderData);
   const allItems = [];
 
   for (let i = 0; i < allCategories.length; i += 1) {
@@ -65,11 +87,13 @@ const feedInOrders = (orderData) => {
     orderitems: allItems,
   }, {
     include: Models.orderitems,
-  });
+  }).then(() => feedInInv(allItems));
 };
+
 
 module.exports = {
   checkout,
-  feedInOrders,
+  feedInOrdersAndInv,
+  // feedInInventory,
 };
 

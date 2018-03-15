@@ -15,10 +15,12 @@ module.exports = [{
         });
       } else {
         console.log('hi');
-        libcheckout.feedInOrders(orderJSON).then(FedData => response({
-          code: 200,
-          data: FedData,
-        }));
+        libcheckout.feedInOrdersAndInv(orderJSON).then((obj) => {
+          response({
+            code: 200,
+            data: obj,
+          });
+        });
       }
     })
       .catch(() => {
