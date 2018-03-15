@@ -20,7 +20,6 @@ const checkout = (order) => {
     }
   }
 
-
   return Models.inventories.findAll({
     where: {
       itemid: {
