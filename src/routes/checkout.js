@@ -15,10 +15,10 @@ module.exports = [{
         });
       } else {
         console.log('hi');
-        libcheckout.feedInOrdersAndInv(orderJSON).then((obj) => {
+        libcheckout.feedInOrdersAndInv(orderJSON).then(() => {
           response({
             code: 200,
-            data: obj,
+            data: 'success',
           });
         });
       }
