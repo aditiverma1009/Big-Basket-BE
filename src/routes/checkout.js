@@ -5,8 +5,9 @@ module.exports = [{
   method: 'POST',
   handler(request, response) {
     const { order } = request.payload;
-    const orderJSON = JSON.parse(order);
-    return libcheckout.checkout(orderJSON).then((DefaultArray) => {
+    console.log(typeof (order));
+    console.log(order);
+    return libcheckout.checkout(order).then((DefaultArray) => {
       console.log(DefaultArray);
       if (DefaultArray.length !== 0) {
         response({
@@ -15,7 +16,7 @@ module.exports = [{
         });
       } else {
         console.log('hi');
-        libcheckout.feedInOrdersAndInv(orderJSON).then(() => {
+        libcheckout.feedInOrdersAndInv(order).then(() => {
           response({
             code: 200,
             data: 'success',

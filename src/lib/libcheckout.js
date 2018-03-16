@@ -48,10 +48,6 @@ const feedInInv = dataFedToOrders => dataFedToOrders.forEach(step => Models.inve
     itemid: step.ordereditemid,
   },
 }).then((record) => {
-  console.log('<<<<<<<<');
-  console.log(record.dataValues);
-  console.log('>>>>>>');
-  console.log(step);
   const diff = (record.dataValues.availableQuantity) - (step.orderedquantity);
   return Models.inventories.update(
     { availableQuantity: diff },
