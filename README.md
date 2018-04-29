@@ -5,7 +5,7 @@ Works with the bigBasket Frontend only.
 Steps to run the entire project on your local (mac)-
 
 1) Clone both repositories of BigBasket
-2) npm install for both
+2) npm install for both , setup postgres according to config file and run migrations.
 3) npm start for backend and node server.js for frontend repository
 4) Check the output on localhost:3000
 
